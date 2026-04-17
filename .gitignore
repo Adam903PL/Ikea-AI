@@ -1,0 +1,21 @@
+.vercel
+
+# frontend
+frontend/node_modules/
+frontend/.next/
+frontend/.vercel/
+frontend/.env
+frontend/.env.local
+frontend/.env.production
+frontend/.env.development
+frontend/*.log
+
+# backend
+backend/.env
+backend/.venv/
+backend/.venv310/
+backend/__pycache__/
+backend/*.log
+backend/tmp_part.svg
+backend/uploads/*
+!backend/uploads/.gitkeep
