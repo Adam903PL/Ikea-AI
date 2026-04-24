@@ -147,3 +147,41 @@ npm run build
 - The backend is the source of truth for processed geometry and generated artifacts.
 - `backend/uploads/` is intentionally ignored except for `.gitkeep`.
 - If OpenRouter is not configured or returns invalid output, the app falls back to deterministic assembly planning.
+
+## Railway Deployment
+
+This repository is set up for a two-service Railway deployment:
+
+- `backend/railway.toml` - FastAPI service
+- `frontend/railway.toml` - Next.js service
+
+Recommended Railway setup:
+
+1. Create one Railway project.
+2. Add two services from the same repository:
+   - backend with root directory `backend`
+   - frontend with root directory `frontend`
+3. Attach a volume to the backend service and mount it, for example, at `/data`.
+4. Set backend variable:
+
+```env
+UPLOADS_DIR=/data/uploads
+```
+
+5. Set backend OpenRouter variables:
+
+```env
+OPENROUTER_API_KEY=...
+OPENROUTER_MODEL=google/gemini-2.5-pro
+OPENROUTER_FALLBACK_MODEL=anthropic/claude-sonnet-4.5
+OPENROUTER_HTTP_REFERER=https://your-frontend-domain
+OPENROUTER_APP_TITLE=IKEA Builder
+```
+
+6. Set frontend variable pointing to the backend public domain:
+
+```env
+NEXT_PUBLIC_API_BASE_URL=https://your-backend-domain
+```
+
+The frontend already proxies browser traffic through Next.js rewrites, so production requests can stay same-origin from the browser point of view.

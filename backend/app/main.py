@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import re
 import shutil
 import threading
@@ -43,7 +44,7 @@ from app.step_processing import (
 )
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-UPLOADS_DIR = BASE_DIR / "uploads"
+UPLOADS_DIR = Path(os.getenv("UPLOADS_DIR", str(BASE_DIR / "uploads"))).resolve()
 ALLOWED_STEP_EXTENSIONS = {".step", ".stp"}
 ALLOWED_SVG_EXTENSIONS = {".svg", ".png"}
 INVALID_PATH_CHARS = r'[<>:"/\\|?*\x00-\x1F]'
